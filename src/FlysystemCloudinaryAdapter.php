@@ -97,7 +97,14 @@ class FlysystemCloudinaryAdapter implements FilesystemAdapter
             }
         }
 
-        $path = trim($path, '/');
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        $mediaExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
+
+        $path = str($path)->trim('/')
+            ->whenEndsWith('.'.$mediaExtensions)
+            ->beforeLast('.'.$extension)
+            ->value();
 
         $options = [
             'type' => 'upload',
