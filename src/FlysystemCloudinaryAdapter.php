@@ -101,8 +101,9 @@ class FlysystemCloudinaryAdapter implements FilesystemAdapter
 
         $mediaExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
 
-        $path = str($path)->trim('/')
-            ->whenEndsWith('.'.$mediaExtensions)
+        $path = str($path)
+            ->trim('/')
+            ->when(in_array($extension, $mediaExtensions))
             ->beforeLast('.'.$extension)
             ->value();
 
